@@ -9,9 +9,11 @@ import org.apache.commons.io.FileUtils;
 
 public class RegistroPresenze {
 	private List<Presenza> presenze;
+	private List<Presenza> readPresenze;
 
 	public RegistroPresenze() {
 		this.presenze = new ArrayList<>();
+		this.readPresenze = new ArrayList<>();
 	}
 
 	public void addPresenza(String nome, int giorni) {
@@ -19,23 +21,42 @@ public class RegistroPresenze {
 		presenze.add(presenza);
 	}
 
-	public void writeOnFile(String myFile) {
+	public void writeOnFile(File myFile) {
 		String presenzaString = "";
 		for (Presenza presenza : presenze) {
 			presenzaString += presenza.getName() + "@" + presenza.getGiorni() + "#";
 		}
 		try {
-			FileUtils.writeStringToFile(new File(myFile), presenzaString, "UTF-8", true);
+			FileUtils.writeStringToFile(myFile, presenzaString + System.lineSeparator(), "UTF-8", true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void readFromFile(String myFile) {
+	public void readFromFile(File myFile) {
 		try {
+			String content = FileUtils.readFileToString(myFile, "UTF-8");
+			String[] presenzeString = content.split("#");
+			for (String presenzaString : presenzeString) {
+				String[] partialPresenzeString = presenzaString.split("@");
 
-		} catch (Exception e) {
-			// TODO: handle exception
+				if (partialPresenzeString.length == 2) {
+					String nome = partialPresenzeString[0];
+					int giorni = Integer.parseInt(partialPresenzeString[1]);
+
+					Presenza presenza = new Presenza(nome, giorni);
+					readPresenze.add(presenza);
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void printMyFile() {
+		for (Presenza presenza : readPresenze) {
+			System.out.println("Nome: " + presenza.getName() + ", Giorni: " + presenza.getGiorni());
 		}
 	}
 
