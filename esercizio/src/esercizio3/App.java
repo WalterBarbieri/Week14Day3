@@ -9,7 +9,7 @@ public class App {
 		RegistroPresenze regPres = new RegistroPresenze();
 
 		regPres.addPresenza("Salta Lacorda", 11);
-		regPres.addPresenza("Viale Manidalnaso", 7);
+		regPres.addPresenza("Mario Rossi", 7);
 		regPres.addPresenza("Piazzalabomba Escappa", 19);
 
 		regPres.writeOnFile(myFile);

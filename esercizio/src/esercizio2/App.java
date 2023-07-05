@@ -7,13 +7,21 @@ public class App {
 	public static void main(String[] args) throws InterruptedException {
 		Random rnd = new Random();
 		int[] myArray = new int[3000];
+
+		int provaTotale = 0;
 		for (int i = 0; i < myArray.length; i++) {
 			myArray[i] = rnd.nextInt();
+			// provaTotale += myArray[i];
 		}
+		for (int num : myArray) {
+			provaTotale += num;
 
-		ThreadSon t1 = new ThreadSon(myArray, 0, 999);
-		ThreadSon t2 = new ThreadSon(myArray, 1000, 1999);
-		ThreadSon t3 = new ThreadSon(myArray, 2000, 2999);
+		}
+		System.out.println(provaTotale);
+
+		ThreadSon t1 = new ThreadSon(myArray, 0, 1000);
+		ThreadSon t2 = new ThreadSon(myArray, 1000, 2000);
+		ThreadSon t3 = new ThreadSon(myArray, 2000, 3000);
 
 		t1.start();
 		t2.start();
